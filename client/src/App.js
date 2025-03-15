@@ -29,13 +29,13 @@ function App() {
       const data = await response.json();
 
       if (response.ok) {
-        setMessage("Upload Successful ✅");
+        setMessage("Upload Successful ");
         setUploadedData(data); // Store response data to display
       } else {
         setMessage("Upload Failed ");
       }
     } catch (error) {
-      setMessage("Upload Failed ");
+      setMessage("Upload Failed ", error);
     }
   };
 
