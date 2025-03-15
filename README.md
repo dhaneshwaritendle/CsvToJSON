@@ -17,7 +17,7 @@ Method : post
 Content Type : multipart/form-data
 body: file input with multipart/form-data format under the key file
 Response :
-![image](https://github.com/user-attachments/assets/7d7850ea-45ce-454e-8152-d15b83960d83)
+![image](https://github.com/user-attachments/assets/95146055-d463-493b-a250-857956de24da)
 
 <h1>Implementation</h1>
 
