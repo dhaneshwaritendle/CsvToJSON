@@ -6,6 +6,7 @@ I have concatenated  firstName and lastName into a single name field, and stored
 TechStack
 Node.js -backend framework
 Express.js for building the api
+multer - to handle file upload 
 pg - postgreSQL client for db operations
 
 <h1>API endpoint</h1> 
@@ -119,7 +120,7 @@ const storeInDB = async (req, res) => {
 
 Dependencies 
 ```
-npm install express cors pg dotenv
+npm install express cors pg dotenv multer
 ```
 create .env file which contains
 ```
