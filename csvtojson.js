@@ -44,8 +44,7 @@ const csvToJson = (req, res,next) => {
             temp[keys[keys.length - 1]] = values[index].trim(); // assign value
         });
 
-        // Concatenate firstName and lastName
-        obj.name = `${obj.name?.firstName || ""} ${obj.name?.lastName || ""}`.trim();
+      
 
         req.jsonData.push(obj);
         }
@@ -58,7 +57,7 @@ const csvToJson = (req, res,next) => {
     
   };
 
-// Store JSON in PostgreSQL
+// store JSON in PostgreSQL
 const storeInDB = async (req, res) => {
     if (!req.jsonData || req.jsonData.length === 0) {
         return res.status(400).json({ error: "No valid data to store" });
@@ -67,19 +66,30 @@ const storeInDB = async (req, res) => {
 
   try {
     for (let user of req.jsonData) {
+
+    // Ensure additional_info is an object
+    user.additional_info = user.additional_info || {};
+
+    // Move gender inside additional_info
+    user.additional_info.gender = user.gender;
+    // Remove gender from the main object
+    delete user.gender; 
+
       await client.query(
-        "INSERT INTO users (name, age, address, additional_info, gender) VALUES ($1, $2, $3, $4, $5)",
-    [       user.name,  
+        "INSERT INTO users (name, age, address, additional_info) VALUES ($1, $2, $3, $4)",
+    [       JSON.stringify(user.name),   
             user.age, 
             JSON.stringify(user.address), 
-            JSON.stringify(user.additional_info || {} ),
-            user.gender,
+            JSON.stringify(user.additional_info || {} ),    
     ]
          );
          console.log("User Data:", JSON.stringify(user, null, 2));
     }
     console.log(" Data successfully inserted into the database.");
-    res.json({ message: "File uploaded and data stored successfully." });
+    res.json({ 
+      message: "File uploaded and data stored successfully.",
+      data: req.jsonData  // Include converted JSON response
+     });
 
   } catch (err) {
     console.error(" Error inserting data:", err);
@@ -87,9 +97,8 @@ const storeInDB = async (req, res) => {
   } 
 };
 
-
-app.use(express.json());
-app.post("/upload", upload.single("file"),csvToJson, storeInDB);
 app.listen(port, ()=>{
     console.log(`server running on http://localhost:${port}`);
 })
+app.use(express.json());
+app.post("/upload", upload.single("file"),csvToJson, storeInDB);
