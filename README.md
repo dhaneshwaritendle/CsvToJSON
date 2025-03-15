@@ -177,11 +177,17 @@ const handleUpload = async (event) => {
     }
   };
 ```
-<h1>How data is getting stored in PostgreSQL</h1>
-Here we are using memorystorage to make insertions fast
-For insertion of 50+ records we will use COPY  command 
-Data is stored in the below format where name retains lastname and firstname properties by having json data type
-Additional properties have properties such as gender added to it.
+# How Data is Stored in PostgreSQL  
+
+We use **MemoryStorage** to speed up insertions.  
+For inserting **50+ records**, we utilize the **COPY** command for efficiency.  
+
+## Data Format  
+- The `name` field retains **firstName** and **lastName** properties using the **JSON** data type.  
+- The `additional_info` field stores extra properties such as **gender**.  
+
 ![image](https://github.com/user-attachments/assets/f12ca766-35c3-470f-acfc-cc1691b89fc9)
+
 This is the output on the console for the following query : 
+
 ![image](https://github.com/user-attachments/assets/3ec34aff-e1f3-4f65-8ebf-e6866e56c547)
