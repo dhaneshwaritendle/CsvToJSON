@@ -1,13 +1,20 @@
 <h1>CsvToJson Convertor which stores values in postgresDB</h1>
 
-This project provides an API endpoint to upload a CSV file, convert its content into JSON format,
-I have concatenated  firstName and lastName into a single name field, and stored them in a PostgreSQL database.
+This project provides an API endpoint to upload a CSV file, convert its content into JSON format
+Things to note are :
+1• First line in the csv file will always be labels for the properties
+2• Number of records in the file can go beyond 50000
+3• You can have properties with infinite depth. (a.b.c.d........z.a1.b1.c1.....)
+4• All sub-properties of a complex property will be placed next to each other in the file.
+
+
 
 TechStack
 Node.js -backend framework
 Express.js for building the api
 multer - to handle file upload 
 pg - postgreSQL client for db operations
+pg-copy-streams - streaming data from csv file to postgresql using COPY command
 
 <h1>API endpoint</h1> 
 
@@ -168,7 +175,11 @@ const handleUpload = async (event) => {
     }
   };
 ```
-Here we are directly reading into memory instead of storing data in a file system
-
-
+<h1>How data is getting stored in PostgreSQL</h1>
+Here we are using memorystorage to make insertions fast
+For insertion of 50+ records we will use COPY  command 
+Data is stored in the below format where name retains lastname and firstname properties by having json data type
+Additional properties have properties such as gender added to it.
+![image](https://github.com/user-attachments/assets/f12ca766-35c3-470f-acfc-cc1691b89fc9)
+This is the output on the console for the following query : 
 ![image](https://github.com/user-attachments/assets/3ec34aff-e1f3-4f65-8ebf-e6866e56c547)
