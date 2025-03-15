@@ -2,19 +2,21 @@
 
 This project provides an API endpoint to upload a CSV file, convert its content into JSON format
 Things to note are :
+
 1• First line in the csv file will always be labels for the properties
+
 2• Number of records in the file can go beyond 50000
+
 3• You can have properties with infinite depth. (a.b.c.d........z.a1.b1.c1.....)
+
 4• All sub-properties of a complex property will be placed next to each other in the file.
 
-
-
-TechStack
-Node.js -backend framework
-Express.js for building the api
-multer - to handle file upload 
-pg - postgreSQL client for db operations
-pg-copy-streams - streaming data from csv file to postgresql using COPY command
+### TechStack  
+- **Node.js** - Backend framework  
+- **Express.js** - For building the API  
+- **Multer** - To handle file uploads  
+- **pg** - PostgreSQL client for DB operations  
+- **pg-copy-streams** - Streaming data from CSV file to PostgreSQL using `COPY` command  
 
 <h1>API endpoint</h1> 
 
