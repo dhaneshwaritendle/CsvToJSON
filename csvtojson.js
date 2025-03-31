@@ -31,7 +31,7 @@ const csvToJson = (req, res,next) => {
     for (let i = 1; i < lines.length; i++) {
         const values = lines[i].split(",").map(value => value.trim());
         if (values.length !== headers.length) continue; // skip incorrect rows
-
+// for nested headers that are dot separted 
         let obj = {};
         headers.forEach((header, index) => {
             const keys = header.split(".");
